@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "05eeca62-532d-41e7-8909-91753ff26099",
+		"name": "NightCake",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"description": null,
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81261322-b3fd-419d-8b03-ede4d2e7f212",
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"console.log(data)",
+									"",
+									"//postman.setEnvironmentVariable(\"token\", data.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "sample",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mail_address",
+									"value": "sample@sample.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "123-1234-123",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "line_id",
+									"value": "sample_id",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "東京",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzMTM1NzYsImxpbmVfaWQiOiIiLCJtYWlsX2FkZHJlc3MiOiJzYW1wbGUlNDBzYW1wbGUuY29tIn0.MzIwNDY4Q0Y5MzY1MzNDNDFCMTdFMEI2QkM4QUUyRkRCMDA0RTI5MTFCRjRFMzJERERDQjJDM0JBRkNERUZGRg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "line_id",
+									"value": "sample_id",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mail_address",
+									"value": "sample@sample.com",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzMTM1NzYsImxpbmVfaWQiOiIiLCJtYWlsX2FkZHJlc3MiOiJzYW1wbGUlNDBzYW1wbGUuY29tIn0.MzIwNDY4Q0Y5MzY1MzNDNDFCMTdFMEI2QkM4QUUyRkRCMDA0RTI5MTFCRjRFMzJERERDQjJDM0JBRkNERUZGRg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "line_id",
+									"value": "sample_id",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5dc04326-f8af-4590-a6e6-91f8b2fd8b7a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f228a65-2de0-47c7-9792-7860f63ce8b6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GetToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "line_id",
+							"value": "lineId",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mail_address",
+							"value": "sample@sample.com",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/get_token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"get_token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzMTQwNDcsInNlZWRTdHIiOiJzYW1wbGUlNDBzYW1wbGUuY29tIn0.NzU3OTdCOUY2MEI3QTdERUNCMUYwQzMwQzU2RUU1OTExOUQwRkY1REM1MTBCQzFCODc2NjQ0QThCNjAxMzgwOQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api/refresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
