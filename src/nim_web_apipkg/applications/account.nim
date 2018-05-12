@@ -14,6 +14,9 @@ type
 proc verifyToken(token: string): bool =
   return APIAuthDomain.verify(token)
 
+proc getToken(mailAddress: string, password: string): string =
+  return APIAuthDomain.getSignedToken(mailAddress, password)
+
 # register
 proc register*(this: type AccountHandler, req: mofuwReq, res: mofuwRes): void {.inline.} =
   let params: tuple[
@@ -46,10 +49,6 @@ proc signin*(this: type AccountHandler, req: mofuwReq, res: mofuwRes): void {.in
     ReqUtil.getPostParam(req, "mail_address"),
     ReqUtil.getPostParam(req, "password")
   )
-  var token = replace(getHeader(req, "Authorization"), "Bearer ", "")
-
-  if verifyToken(token) != true:
-    mofuwResp(HTTP200, "application/json", ${"status": ""})
 
   var queryRs = AccountDomain.signin(
     dbParams.mailAddress,
@@ -59,22 +58,26 @@ proc signin*(this: type AccountHandler, req: mofuwReq, res: mofuwRes): void {.in
   if queryRs == nil:
     queryRs = @[""]
 
+  # JWTトークンの発行
+  var token = getToken(dbParams.mailAddress, dbParams.password)
+
   let signinRs = %*{
-    "status": queryRs
+    "status": queryRs,
+    "token": token
   }
 
   mofuwResp(HTTP200, "application/json", $signinRs)
 
 # get logined user account infomation
 proc me*(this: type AccountHandler, req: mofuwReq, res: mofuwRes): void {.inline.} =
-  var mail_address = ReqUtil.getPostParam(req, "mail_address")
+  var mailAddress = ReqUtil.getPostParam(req, "mail_address")
   var password = ReqUtil.getPostParam(req, "password")
   var token = replace(getHeader(req, "Authorization"), "Bearer ", "")
 
   if verifyToken(token) != true:
     mofuwResp(HTTP200, "application/json", ${"status": ""})
 
-  var queryRs = AccountDomain.me(mail_address, password)
+  var queryRs = AccountDomain.me(mailAddress, password)
   if queryRs == nil:
     queryRs = @[""]
 

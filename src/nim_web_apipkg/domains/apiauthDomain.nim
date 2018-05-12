@@ -10,15 +10,16 @@ type
 
 var secret = "secret"
 
-proc sign*(this: type APIAuthDomain, seedStr: string): string {.inline.} =
+proc getSignedToken*(this: type APIAuthDomain, mailAddress: string, password : string): string {.inline.} =
   var token = toJWT(%*{
       "header": {
         "alg": "HS256",
         "typ": "JWT"
       },
       "claims": {
-        "seedStr": seedStr,
-        "exp": (getTime() + 1.hours).toSeconds().int
+        "mail_address": mailAddress,
+        "password": password,
+        "exp": (getTime() + 24.hours).toSeconds().int
       }
     })
   token.sign(secret)

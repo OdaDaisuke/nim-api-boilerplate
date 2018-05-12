@@ -31,8 +31,6 @@ Implementing Domain-Driven-Design(Onion architecture)
 
 ## Endpoints
 
-- POST - `/api/get_token` (mail_address, password)
-- PUT - `/api/refresh` (Authorization: "Bearer: old_access_token")
 - POST - `/api/register` (name, mail_address, password)
-- POST - `/api/signin` (mail_address, password)
-- POST - `/api/me` (mail_address, password)
+- POST - `/api/signin` (mail_address, password) returns JWT token.
+- POST - `/api/me` (mail_address, password) and Set JWT-token to Bearer.

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "05eeca62-532d-41e7-8909-91753ff26099",
-		"name": "NightCake",
+		"_postman_id": "06152c8a-a5d2-4d00-b3c5-5d9d116d042f",
+		"name": "NimAPItest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -50,20 +50,8 @@
 									"type": "text"
 								},
 								{
-									"key": "phone_number",
-									"value": "123-1234-123",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "line_id",
-									"value": "sample_id",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "location",
-									"value": "東京",
+									"key": "password",
+									"value": "sample_password",
 									"description": "",
 									"type": "text"
 								}
@@ -92,7 +80,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzMTM1NzYsImxpbmVfaWQiOiIiLCJtYWlsX2FkZHJlc3MiOiJzYW1wbGUlNDBzYW1wbGUuY29tIn0.MzIwNDY4Q0Y5MzY1MzNDNDFCMTdFMEI2QkM4QUUyRkRCMDA0RTI5MTFCRjRFMzJERERDQjJDM0JBRkNERUZGRg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzNDE0NTgsInNlZWRTdHIiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKbGVIQWlPakUxTWpVek5ERTBORElzSW5ObFpXUlRkSElpT2lKellXMXdiR1VsTkRCellXMXdiR1V1WTI5dEluMC5Sa1UyTVRZNE9VRTRORFkzT1RNek1UY3pOVEU0UTBZMk9UWTBNelJHTWtKQ1JrVTNNVVF6UlRVek1UZ3lNak16UmpZMk1VSkdOemxEUXpKRU1qWTVOdyJ9.RTAzRjg5REU4NzEyOUQzMjc1N0U1NUQ1QThDMDkzMUI5QjNFRjlBMjRCRUUyN0M1MkRGOTIwNEQ5MjFENDU5Mg",
 									"type": "string"
 								}
 							]
@@ -108,8 +96,8 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "line_id",
-									"value": "sample_id",
+									"key": "password",
+									"value": "sample_password",
 									"description": "",
 									"type": "text"
 								},
@@ -144,7 +132,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzMTM1NzYsImxpbmVfaWQiOiIiLCJtYWlsX2FkZHJlc3MiOiJzYW1wbGUlNDBzYW1wbGUuY29tIn0.MzIwNDY4Q0Y5MzY1MzNDNDFCMTdFMEI2QkM4QUUyRkRCMDA0RTI5MTFCRjRFMzJERERDQjJDM0JBRkNERUZGRg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjYyMDYzNDEsInBhc3N3b3JkIjoic2FtcGxlX3Bhc3N3b3JkIiwibWFpbF9hZGRyZXNzIjoic2FtcGxlJTQwc2FtcGxlLmNvbSJ9.QUFEOTQ3OTI5M0IxQ0Q3NkQ4NEY5RTg5RTFFMTQ5Q0MwNDRBMEE5N0ZCMEQyRUE1RTlGQTVERkNGRjc4MkI1QQ",
 									"type": "string"
 								}
 							]
@@ -160,8 +148,14 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "line_id",
-									"value": "sample_id",
+									"key": "mail_address",
+									"value": "sample@sample.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "sample_password",
 									"description": "",
 									"type": "text"
 								}
@@ -205,88 +199,28 @@
 					}
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2344b9be-5c92-4646-9d93-618852a72ff5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "GetToken",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content",
-						"value": "application/x-www-form-urlencoded"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "line_id",
-							"value": "lineId",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "mail_address",
-							"value": "sample@sample.com",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/get_token",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"get_token"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Refresh",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjUzMTQwNDcsInNlZWRTdHIiOiJzYW1wbGUlNDBzYW1wbGUuY29tIn0.NzU3OTdCOUY2MEI3QTdERUNCMUYwQzMwQzU2RUU1OTExOUQwRkY1REM1MTBCQzFCODc2NjQ0QThCNjAxMzgwOQ",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:8080/api/refresh",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"refresh"
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"id": "1de53475-1682-4b46-aa6d-14a4f9b15be9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
