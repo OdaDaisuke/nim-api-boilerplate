@@ -10,7 +10,7 @@ $ nimble server
 ```
 
 ## Design pattern
-Implementing Domain-Driven-Design(Onion architecture)
+Implementing Domain-Driven-Design(Eric's Layered architecture)
 
 ## Directory
 
