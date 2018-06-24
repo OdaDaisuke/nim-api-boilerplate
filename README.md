@@ -1,4 +1,4 @@
-# Nim API server sample
+# Mofuw(Nim) API Boilerplate
 use Nim with mofuw
 
 ```bash
