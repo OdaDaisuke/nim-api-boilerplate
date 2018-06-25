@@ -6,7 +6,8 @@ $ nimble install mofuw
 $ nimble install dotenv
 $ nimble install jwt
 $ cp .env.default .env
-$ nimble server
+$ sh setup.sh YOUR_PROJECT_NAME # change project name
+$ nimble server # start server
 ```
 
 ## Design pattern
