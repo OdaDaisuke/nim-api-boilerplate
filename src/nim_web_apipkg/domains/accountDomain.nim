@@ -1,5 +1,6 @@
 import
   db_sqlite,
+  sha1,
   ../models/db,
   ../models/accountModel
 
@@ -7,6 +8,10 @@ type
   AccountDomain* = ref object
 
 let dbCtx = DB.getContext()
+
+proc hashPw(pw: string): SHA1Digest =
+  const salt = "A0cek2_"
+  return sha1.compute(pw & salt)
 
 # Create new account.
 proc register*(
@@ -20,7 +25,7 @@ proc register*(
       dbCtx,
       name,
       mailAddress,
-      password
+      hashPw(password)
     )
     return createRs
   except:
@@ -36,7 +41,7 @@ proc signin*(
     signinRs = AccountModel.signin(
       dbCtx,
       mailAddress,
-      password
+      hashPw(password)
     )
   except:
     echo "failed"

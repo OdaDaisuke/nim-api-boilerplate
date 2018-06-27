@@ -15,6 +15,7 @@ requires "nim >= 0.18.0"
 requires "mofuw >= 0.1.1"
 requires "dotenv >= 1.1.0"
 requires "jwt >= 0.0.1"
+requires "sha1 >= 1.1.0"
 
 task server, "start server":
   rmDir "bin"

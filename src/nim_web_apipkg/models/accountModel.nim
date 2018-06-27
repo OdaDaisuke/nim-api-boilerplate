@@ -1,6 +1,7 @@
 import
   db_sqlite,
   os,
+  sha1,
   dotenv
 
 let env = initDotEnv()
@@ -15,7 +16,7 @@ proc createAccount*(
   dbCtx: DbConn,
   name: string,
   mail_address: string,
-  password: string
+  password: SHA1Digest
 ): string {.inline.} =
   try:
     dbCtx.exec(sql"BEGIN")
@@ -33,7 +34,7 @@ proc signin*(
   this: type AccountModel,
   dbCtx: DbConn,
   mail_address: string,
-  password: string
+  password: SHA1Digest
 ): seq[string] {.inline.} =
   try:
     dbCtx.exec(sql"BEGIN")
