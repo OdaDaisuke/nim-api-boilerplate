@@ -3,3 +3,4 @@ bin/
 .DS_Store
 .env
 app_db.db
+*.swp
