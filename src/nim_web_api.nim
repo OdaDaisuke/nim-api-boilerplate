@@ -1,22 +1,39 @@
 import
   mofuw,
   db_sqlite,
-  nim_web_apipkg/applications/account, # AccountHandler[obj]
-  nim_web_apipkg/applications/app # AppHandler[obj]
+  nim_web_apipkg/models/db, # DB[obj]
+  nim_web_apipkg/models/accountModel, # AccountModel[obj]
+  nim_web_apipkg/domains/accountDomain, # AccountDomain[obj]
+  nim_web_apipkg/domains/apiauthDomain, # APIAuthDomain[obj]
+  nim_web_apipkg/applications/app, # App[obj]
+  nim_web_apipkg/applications/account # AccountHandler[obj]
 
-AppHandler.appInit() # DBマイグレーションなどが行われる
+let dbCtx = DB.getContext()
+App(dbCtx: dbCtx).init() # DB init
 
-proc handler(req: mofuwReq, res: mofuwRes) {.async.} =
-  routes:
+# Models
+let acm = AccountModel(dbCtx: dbCtx)
 
-    post "/api/register":
-      AccountHandler.register(req, res)
+# Domain
+let acd = AccountDomain(dbCtx: dbCtx, accountModel: acm)
+let aad = APIAuthDomain()
+aad.init()
 
-    post "/api/signin":
-      AccountHandler.signin(req, res)
+let accountHandler = AccountHandler(accountDomain: acd, apiAuthDomain: aad)
 
-    post "/api/me":
-      AccountHandler.me(req, res)
+routes:
+  post "/api/register":
+    accountHandler.register(ctx)
+
+  post "/api/signin":
+    accountHandler.signin(ctx)
+
+  post "/api/me":
+    accountHandler.me(ctx)
 
 echo "Start server on localhost:8080"
-handler.mofuwRun()
+
+newServeCtx(
+  port = 8080,
+  handler = mofuwHandler
+).serve()

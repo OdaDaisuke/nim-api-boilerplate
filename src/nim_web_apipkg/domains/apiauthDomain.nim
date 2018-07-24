@@ -7,10 +7,12 @@ import
 
 type
   APIAuthDomain* = ref object
+    secret*: string
 
-var secret = "secret"
+proc init*(this: APIAuthDomain): void {.inline.} =
+  this.secret = "secret"
 
-proc getSignedToken*(this: type APIAuthDomain, mailAddress: string, password : string): string {.inline.} =
+proc getSignedToken*(this: APIAuthDomain, mailAddress: string, password : string): string {.inline.} =
   var token = toJWT(%*{
       "header": {
         "alg": "HS256",
@@ -22,13 +24,18 @@ proc getSignedToken*(this: type APIAuthDomain, mailAddress: string, password : s
         "exp": (getTime() + 24.hours).toSeconds().int
       }
     })
-  token.sign(secret)
+  token.sign(this.secret)
   return $token
 
-proc verify*(this: type APIAuthDomain, token: string): bool {.inline.} =
+proc verify*(this: APIAuthDomain, token: string): bool {.inline.} =
+  try:
+    return token.toJWT().verify(this.secret)
+  except InvalidToken:
+    return false
+
+proc decode*(this: APIAuthDomain, token: string): string {.inline.} =
   try:
     let jwtToken = token.toJWT()
-    result = jwtToken.verify(secret)
+    return $jwtToken.claims["mail_address"].node.str
   except InvalidToken:
-    result = false
-  return result
+    return ""

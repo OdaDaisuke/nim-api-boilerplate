@@ -9,57 +9,66 @@ env.load
 
 type
   AccountModel* = ref object
-    dbCtx: DbConn
+    dbCtx*: DbConn
 
 proc createAccount*(
-  this: type AccountModel,
-  dbCtx: DbConn,
+  this: AccountModel,
   name: string,
   mail_address: string,
   password: SHA1Digest
 ): string {.inline.} =
   try:
-    dbCtx.exec(sql"BEGIN")
-    dbCtx.exec(
+    this.dbCtx.exec(sql"BEGIN")
+    this.dbCtx.exec(
       sql("INSERT INTO user (name, mail_address, password) VALUES (?, ?, ?)"),
       name, mail_address, password
     )
-    dbCtx.exec(sql"COMMIT")
+    this.dbCtx.exec(sql"COMMIT")
     echo "succeed"
     return "succeed"
   except:
     echo "DB exception!"
 
 proc signin*(
-  this: type AccountModel,
-  dbCtx: DbConn,
-  mail_address: string,
+  this: AccountModel,
+  email: string,
   password: SHA1Digest
 ): seq[string] {.inline.} =
   try:
-    dbCtx.exec(sql"BEGIN")
-    var userData = dbCtx.getRow(
+    this.dbCtx.exec(sql"BEGIN")
+    var userData = this.dbCtx.getRow(
       sql("select * from user where mail_address = ? and password = ? limit 1"),
-      mail_address, password
+      email, password
     )
-    dbCtx.exec(sql"COMMIT")
+    this.dbCtx.exec(sql"COMMIT")
     return userData
   except:
     echo "DB exception!"
 
 proc getMe*(
-  this: type AccountModel,
-  dbCtx: DbConn,
-  mail_address: string,
+  this: AccountModel,
+  email: string,
   password: string
 ): seq[string] {.inline.} =
   try:
-    dbCtx.exec(sql"BEGIN")
-    var userData = dbCtx.getRow(
+    this.dbCtx.exec(sql"BEGIN")
+    var userData = this.dbCtx.getRow(
       sql("select * from user where mail_address = ? and password = ? limit 1"),
-      mail_address, password
+      email, password
     )
-    dbCtx.exec(sql"COMMIT")
+    this.dbCtx.exec(sql"COMMIT")
+    return userData
+  except:
+    echo "DB exception!"
+
+proc getMeByEmail*(this: AccountModel, email: string): seq[string] {.inline.} =
+  try:
+    this.dbCtx.exec(sql"BEGIN")
+    var userData = this.dbCtx.getRow(
+      sql("select * from user where mail_address = ? limit 1"),
+      email
+    )
+    this.dbCtx.exec(sql"COMMIT")
     return userData
   except:
     echo "DB exception!"

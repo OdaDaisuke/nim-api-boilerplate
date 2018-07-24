@@ -1,13 +1,10 @@
 import
-  mofuw,
-  json,
+  db_sqlite,
   ../models/db # DB[obj]
 
 type
-  AppHandler* = ref object of RootObj
+  App* = ref object of RootObj
+    dbCtx*: DbConn
 
-proc appInit*(this: type AppHandler): void {.inline.} =
-  # DBマイグレーション
-  let dbCtx = DB.getContext()
-  discard DB.migrate(dbCtx)
-  dbCtx.close()
+proc init*(this: App): void {.inline.} =
+  discard DB.migrate(this.dbCtx)

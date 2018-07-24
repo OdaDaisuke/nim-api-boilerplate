@@ -6,11 +6,11 @@ import
 
 type
   ReqUtil* = ref object
-    # req: mofuwReq # インスタンス変数としてmofuwReqをもたせたいけどなんかエラーでできない
+    mofuwCtx*: MofuwCtx
 
-# POStリクエストのボディパーサ
-proc getPostParam*(this: type ReqUtil, req: mofuwReq, key: string): string {.inline.} =
-  let reqParams = req.body.split('&')
+# Body parser of POST Request.
+proc getPostParam*(this: ReqUtil, key: string): string {.inline.} =
+  let reqParams = this.mofuwCtx.body.split('&')
   for i in countup(0, reqParams.len - 1) :
     let curParam = reqParams[i]
     let curParamSet = curParam.split("=")

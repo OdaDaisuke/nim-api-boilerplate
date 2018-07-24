@@ -6,8 +6,8 @@ import
 
 type
   AccountDomain* = ref object
-
-let dbCtx = DB.getContext()
+    dbCtx*: DbConn
+    accountModel*: AccountModel
 
 proc hashPw(pw: string): SHA1Digest =
   const salt = "A0cek2_"
@@ -15,52 +15,49 @@ proc hashPw(pw: string): SHA1Digest =
 
 # Create new account.
 proc register*(
-  this: type AccountDomain,
+  this: AccountDomain,
   name: string,
   mailAddress: string,
   password: string
 ): string {.inline.} =
   try:
-    var createRs = AccountModel.createAccount(
-      dbCtx,
+    return this.accountModel.createAccount(
       name,
       mailAddress,
       hashPw(password)
     )
-    return createRs
   except:
     return ""
 
 proc signin*(
-  this: type AccountDomain,
+  this: AccountDomain,
   mailAddress: string,
   password: string
 ): seq[string] {.inline.} =
   var signinRs: seq[string]
   try:
-    signinRs = AccountModel.signin(
-      dbCtx,
-      mailAddress,
-      hashPw(password)
-    )
+    return this.accountModel.signin(mailAddress, hashPw(password))
   except:
     echo "failed"
     return @[""]
-  return signinRs
 
 proc me*(
-  this: type AccountDomain,
-  mailAddress: string,
+  this: AccountDomain,
+  email: string,
   password: string
 ): seq[string] {.inline.} =
 
   var me: seq[string]
   try:
-    me = AccountModel.getMe(
-      dbCtx,
-      mailAddress,
-      password
-    )
+    me = this.accountModel.getMe(email, password)
+  except:
+    echo "failed"
+  return me
+
+proc getMeByEmail*(this: AccountDomain, email: string): seq[string] {.inline.} =
+  var me: seq[string]
+  try:
+    me = this.accountModel.getMeByEmail(email)
   except:
     echo "failed"
   return me
