@@ -34,4 +34,4 @@ Implementing Domain-Driven-Design(Eric's Layered architecture)
 
 - POST - `/api/register` (name, mail_address, password)
 - POST - `/api/signin` (mail_address, password) returns JWT token.
-- POST - `/api/me` (mail_address, password) and Set JWT-token to Bearer.
+- POST - `/api/me` Set JWT-token to Bearer.
