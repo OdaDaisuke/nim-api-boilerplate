@@ -4,7 +4,6 @@ import
   db_sqlite,
   strutils,
   app, # App[obj]
-  ../utils/req, # ReqUtil[obj]
   ../domains/accountDomain, # AccountDomain[obj]
   ../domains/apiauthDomain # APIAuthDomain[obj]
 
@@ -15,15 +14,14 @@ type
 
 # register
 proc register*(this: AccountHandler, ctx: MofuwCtx): void {.inline.} =
-  let reqUtil = ReqUtil(mofuwCtx: ctx)
   let params: tuple[
     name: string,
     mailAddress: string,
     password: string
   ] = (
-    reqUtil.getPostParam("name"),
-    reqUtil.getPostParam("mail_address"),
-    reqUtil.getPostParam("password")
+    ctx.body("name"),
+    ctx.body("mail_address"),
+    ctx.body("password")
   )
 
   let insertRs = this.accountDomain.register(
@@ -39,13 +37,12 @@ proc register*(this: AccountHandler, ctx: MofuwCtx): void {.inline.} =
 
 # signin
 proc signin*(this: AccountHandler, ctx: MofuwCtx): void {.inline.} =
-  let reqUtil = ReqUtil(mofuwCtx: ctx)
   let dbParams: tuple[
     mailAddress: string,
     password: string
   ] = (
-    reqUtil.getPostParam("mail_address"),
-    reqUtil.getPostParam("password")
+    ctx.body("mail_address"),
+    ctx.body("password")
   )
 
   var queryRs = this.accountDomain.signin(

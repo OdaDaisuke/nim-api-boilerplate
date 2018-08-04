@@ -1,4 +1,3 @@
-# APIのJWT認証周り
 import
   jwt,
   json,
